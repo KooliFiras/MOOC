@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<constant name="struts.multipart.saveDir" value="D:\tmp" />
+<constant name="struts.devMode" value="false" />
+<constant name="struts.multipart.maxSize" value="5368709120" />
+
+   <package name="default" extends="struts-default"  >
+
+<!-- ******************************************************************************************************** -->
+
+
+<!--                                                         admin login                                      -->
+
+     <action name="adminlogin" class="view.AdministrateurAction"
+   method="login">  
+<result name="success" type="dispatcher" >administrateur.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+  
+</action> 
+
+
+
+<!--                                                         admin logout                                      -->
+
+
+   <action name="adminlogout" class="view.AdministrateurAction" 
+   method="logout">  
+<result name="success" >index.jsp</result>  
+</action>  
+
+<!--                                                        admin dash                                        -->
+
+     <action name="admindash" class="view.AdministrateurAction"
+   method="dash">  
+<result name="success">administrateur.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+  
+</action> 
+
+
+<!--                                                         admin Profile                                    -->
+
+     <action name="adminprofile" class="view.AdministrateurAction"
+   method="profile">  
+<result name="success" type="dispatcher" >adminprofile.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+  
+</action> 
+
+
+<!--                                                        admin edit Profile                                 -->
+
+     <action name="adminsaveProfile" class="view.AdministrateurAction"
+   method="editProfile">  
+<result name="success" type="dispatcher" >administrateur.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+<result name="input" >page-404.jsp</result>  
+</action> 
+
+<!--                                                        admin file download                                -->
+
+<action name="downloadFile" class="view.AdministrateurAction" method="execute">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+
+
+
+<!-- *********************************************************************************************************** -->
+
+
+  <!--                                                 formateur login                              -->
+
+     <action name="formateurlogin" class="view.FormateurAction"
+   method="login">  
+<result name="success" type="dispatcher" >formateur.jsp</result>  
+<result name="error" >page-404.jsp</result>  
+  <result name="input" >page-login.jsp</result>  
+</action> 
+
+
+<!--                                                  formateur logout                               -->
+
+
+   <action name="formateurlogout" class="view.FormateurAction" 
+   method="logout">  
+<result name="success">index.jsp</result>  
+</action>  
+
+
+
+  <!--                                                 formateur register                              -->
+   
+      <action name="formateurregister" 
+         class="view.FormateurAction"
+         method="execute">
+    <interceptor-ref name="defaultStack"/>  
+         <result name="success">formateur.jsp</result>
+         <result name="error">page-404.jsp</result>
+      </action>
+  
+
+<!--                                                     formateur photo profile                       -->
+
+
+      <action name="userImage" class="view.FormateurAction" method="executeimage">
+	  	  <interceptor-ref name="fileUpload">
+	        <param name="maximumSize">2097152</param>
+	        <param name="allowedTypes">
+	            image/png,image/gif,image/jpeg,image/pjpeg
+	        </param>
+	      </interceptor-ref>
+		  <interceptor-ref name="defaultStack"></interceptor-ref>
+		  <result name="success">formateur.jsp</result>
+		   <result name="error">page-404.jsp</result>
+	</action>
+
+
+ <!--                                                       formateur dash                          -->
+
+
+     <action name="formateurdash" class="view.FormateurAction"
+   method="profile">  
+<result name="success" >formateur.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+</action> 
+
+
+
+<!--                                                        formateur Profile                          -->
+
+
+     <action name="formateurprofile" class="view.FormateurAction"
+   method="profile">  
+<result name="success" type="dispatcher" >formateurprofil.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+</action> 
+
+
+ <!--                                                       get All formateur                          -->
+       
+       
+  <action name="loadFormateur" class="view.FormateurAction" method="allFormateur">
+      <result name="success">getAllFormateur.jsp</result>
+    </action>   
+   
+
+  <!--                                                       save Cours                               -->
+
+ <action name="cours" class="view.CoursAction"
+   method="save">  
+<result name="success">index.jsp</result>  
+<result name="input" >page-404.jsp</result>  
+</action> 
+
+
+
+<!--                                                         formateur edit Profile                  -->
+
+
+     <action name="formateursaveProfile" class="view.FormateurAction"
+   method="editProfile">  
+<result name="success" type="dispatcher" >formateur.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+<result name="input" >page-404.jsp</result>  
+</action> 
+
+  
+     <!--                                                       formateur getMAilPAge                   -->
+   
+   
+      <action name="getPage" class="view.FormateurAction"  method="getMailPage">
+      <result name="success">mail.jsp</result>
+      </action>
+  
+  
+  
+   
+   <!--                                                       formateur send email                   -->
+   
+   
+      <action name="emailer" class="view.SendEmail" >
+      <result name="error">error.jsp</result>
+      <result name="success">success.jsp</result>
+      </action>
+      
+   
+   <!-- *********************************************************************************************************** -->
+   
+   <!--                                                       apprenant login                          -->
+
+     <action name="apprenantlogin" class="view.PersonneAction"
+   method="login">  
+<result name="success" type="dispatcher" >apprenant.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+  
+    </action> 
+   
+ 
+     
+     <!--                                                      apprenant registration                  -->
+    
+      <action name="inscriptionaction" 
+         class="view.PersonneAction"
+         method="add">
+         <result name="success">apprenant.jsp</result>
+         <result name="error">page-login.jsp</result>
+      </action>
+      
+            <!--                                               apprenant logout                        -->
+      
+      <action name="apprenantlogout" class="view.PersonneAction" method="logout">  
+		<result name="success">index.jsp</result>  
+		<result name="error">page-404.jsp</result>
+	</action>  
+     
+        <!--                                                   Apprenant dash                          -->
+
+     <action name="apprenantdash" class="view.PersonneAction"
+   method="dash">  
+<result name="success" >apprenant.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+  
+    </action> 
+      
+      
+      <!--                                                  Apprenant Profile                          -->
+
+     <action name="apprenantprofile" class="view.PersonneAction"
+   method="profile">  
+<result name="success" >apprenantProfil.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+  
+</action> 
+      
+     <!--                                                 Apprenant edit Profile                        -->
+
+     <action name="saveProfile" class="view.PersonneAction"
+   method="editProfile">  
+<result name="success" type="dispatcher" >apprenant.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+<result name="input" >page-404.jsp</result>  
+</action> 
+      
+
+<!--                                                     Apprenant Courses registration                  -->
+
+     <action name="coursesReg" class="view.PersonneAction"
+   method="inscription">  
+<result name="success">coursesPage.jsp</result>  
+<result name="error" >page-login.jsp</result>  
+
+</action> 
+          
+
+<!--                                                      Apprenant introduction download                 -->
+
+		<action name="downloadIntro" class="view.PersonneAction" method=" introDownload">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>           
+
+<!--                                                      Apprenant utilisation download                 -->
+
+		<action name="downloadUtil" class="view.PersonneAction" method="utilDownload">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action> 
+
+ <!-- Contact  -->
+  <action name="contactaction" 
+         class="view.ContactAction"
+         method="add">
+         <result name="success">index.html</result>
+         <result name="error">page-404.html</result>
+      </action>
+      
+      
+      <!-- Information -->
+     <action name="inforamtionaction" 
+         class="view.InformationAction"
+         method="add">
+         <result name="success">index.html</result>
+         <result name="error">page-404.html</result>
+      </action>
+   
+   
+   <!-- FAQ  -->
+     
+       <action name="faqaction" 
+         class="view.FaqAction"
+         method="add">
+         <result name="success">faq.jsp</result>
+         <result name="error">page-404.html</result>
+      </action>
+     
+      
+</package>
+
+</struts>
